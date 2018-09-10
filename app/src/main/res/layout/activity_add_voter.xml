@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/searchbar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="voter name"
+            android:layout_marginLeft="50dp"/>
+
+        <Button
+            android:id="@+id/searchbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"/>
+
+</LinearLayout>
