@@ -106,21 +106,21 @@ public class MainActivity extends AppCompatActivity {
             case R.id.voting_room_list:
                 VotingRoomList();
                 return true;
-            case R.id.add_voter:
-                addVoter();
-                return true;
             case R.id.request_list:
                 requestList();
                 return true;
             case R.id.search_room:
                 SearchRoom();
                 return true;
+            case R.id.my_room:
+                MyVotingRoom();;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void startVotingRoom(){
-        Intent startVotingRoom = new Intent(MainActivity.this, VotingRoomActivity.class);
+        Intent startVotingRoom = new Intent(MainActivity.this, VotingRoomEditorActivity.class);
         startActivity(startVotingRoom);
     }
 
@@ -141,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void SearchRoom(){
         Intent searchRoom = new Intent(MainActivity.this, SearchVotingRoomActivity.class);
+        startActivity(searchRoom);
+    }
+
+    public void MyVotingRoom(){
+        Intent searchRoom = new Intent(MainActivity.this, MyVotingRoomActivity.class);
         startActivity(searchRoom);
     }
 

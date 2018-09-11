@@ -28,6 +28,9 @@
         <activity android:name="com.example.apple.votingmachine.RequestActivty"/>
         <activity android:name="com.example.apple.votingmachine.RequestListActivity"/>
         <activity android:name="com.example.apple.votingmachine.SearchVotingRoomActivity"/>
+        <activity android:name="com.example.apple.votingmachine.VotingRoomEditorActivity"/>
+        <activity android:name="com.example.apple.votingmachine.MyVotingRoomActivity"/>
+        <activity android:name="com.example.apple.votingmachine.MyProfileActivity"/>
 
     </application>
 

@@ -86,7 +86,6 @@ public class VotingRoomListActivity extends AppCompatActivity {
             roomName.setText(name);
 
         }
-
     }
 
 }

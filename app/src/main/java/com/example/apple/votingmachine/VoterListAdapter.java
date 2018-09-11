@@ -28,11 +28,13 @@ public class VoterListAdapter extends RecyclerView.Adapter<VoterListAdapter.Vote
 
     private List<User> mVotersList;
     Context context;
+    private String room_id;
 
     //-----GETTING LIST OF ALL MESSAGES FROM CHAT ACTIVITY ----
-    public VoterListAdapter(List<User> mVotersList, Context context) {
+    public VoterListAdapter(List<User> mVotersList, Context context, String room_id) {
         this.mVotersList = mVotersList;
         this.context = context;
+        this.room_id = room_id;
     }
 
 
@@ -65,13 +67,13 @@ public class VoterListAdapter extends RecyclerView.Adapter<VoterListAdapter.Vote
                 @Override
                 public void onClick(View view) {
                     Intent profile = new Intent(context, ProfileActivity.class);
+                    profile.setAction(VoterListAdapter.class.toString());
                     profile.putExtra("user_id", userId);
+                    profile.putExtra("room_id", room_id);
                     context.startActivity(profile);
                 }
             });
         }
-
-
     }
 
     //----SETTING EACH HOLDER WITH DATA----

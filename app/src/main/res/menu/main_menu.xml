@@ -17,11 +17,6 @@
         android:title="voting room list" />
 
     <item
-        android:id="@+id/add_voter"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="add a new voter" />
-
-    <item
         android:id="@+id/request_list"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Request List" />
@@ -30,5 +25,10 @@
         android:id="@+id/search_room"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Search Room" />
+
+    <item
+        android:id="@+id/my_room"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="My Voting Room" />
 
 </menu>

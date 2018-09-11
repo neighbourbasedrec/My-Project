@@ -32,6 +32,7 @@ public class AddVoterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_voter);
         Intent getIntent = getIntent();
         final String roomID = getIntent.getExtras().getString("room_id");
+        if(roomID == null){finish();}
         mSearchedUser = (RecyclerView)findViewById(R.id.user_list);
         mSearchedUser.setLayoutManager(new LinearLayoutManager(AddVoterActivity.this));
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("user");
