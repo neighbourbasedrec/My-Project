@@ -1,6 +1,7 @@
 package com.example.apple.votingmachine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +47,11 @@ public class MyVotingRoomActivity extends AppCompatActivity{
 
         mAuth = FirebaseAuth.getInstance();
         //mVoRoomRef = FirebaseDatabase.getInstance().getReference().child("votingRoom");
-        mRoom = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid()).child("VotingRoom");
+        try {
+            mRoom = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid()).child("VotingRoom");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mVoterlist = (RecyclerView) findViewById(R.id.room_list);
         voterListAdapter = new MyVotingRoomAdapter(voters,this);
         layoutManager = new LinearLayoutManager(MyVotingRoomActivity.this);
@@ -65,15 +70,16 @@ public class MyVotingRoomActivity extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     //Toast.makeText(VotingRoomActivity.this,child.getKey(),Toast.LENGTH_LONG).show();
-                    //System.out.println("66666666666666666666666666666" + child.getKey().toString());
+                    System.out.println("66666666666666666666666666666" + mAuth.getCurrentUser().getUid()+ child.getKey().toString());
                     FirebaseDatabase.getInstance().getReference().child("votingRoom").child(child.getKey()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            System.out.println("55555555555555555555555555555555555555");
                             VotingRoom votingRoom = dataSnapshot.getValue(VotingRoom.class);
                             voters.add(votingRoom);
                             voterListAdapter.notifyDataSetChanged();
                             layoutManager.scrollToPosition(voters.size() - 1);
-                            System.out.println("3333333333333" + votingRoom.getRoomName());
+                            System.out.println("3333333333333" + votingRoom.toString());
                         }
 
                         @Override

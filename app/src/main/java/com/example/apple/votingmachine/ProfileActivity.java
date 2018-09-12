@@ -16,6 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -36,14 +39,16 @@ public class ProfileActivity extends AppCompatActivity {
     private Boolean invite = false;
     private String user_id;
     private String room_id;
+    private String image;
     private DatabaseReference voterPath;
     private Boolean IsVoteUp = true;
     private Boolean IsVoteDown = true;
+    private CircleImageView mCircleImageView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        mCircleImageView = (CircleImageView) findViewById(R.id.displayimage);
         name = (TextView) findViewById(R.id.user_name);
         email = (TextView) findViewById(R.id.email);
         description = (TextView) findViewById(R.id.self);
@@ -169,6 +174,19 @@ public class ProfileActivity extends AppCompatActivity {
                 else{
                     voterPath.child("voteUp").setValue(null);
                     voterPath.child("commentUp").setValue(null);
+                    FirebaseDatabase.getInstance().getReference().child("votingRoom").child(room_id).child("Voter").child(user_id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(!dataSnapshot.exists()){
+                                FirebaseDatabase.getInstance().getReference().child("votingRoom").child(room_id).child("Voter").child(user_id).setValue(true);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                     voteUp.setText("Vote Up");
                     IsVoteUp = true;
 
@@ -188,6 +206,19 @@ public class ProfileActivity extends AppCompatActivity {
                 else{
                     voterPath.child("voteDown").setValue(null);
                     voterPath.child("commentDown").setValue(null);
+                    FirebaseDatabase.getInstance().getReference().child("votingRoom").child(room_id).child("Voter").child(user_id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(!dataSnapshot.exists()){
+                                FirebaseDatabase.getInstance().getReference().child("votingRoom").child(room_id).child("Voter").child(user_id).setValue(true);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                     voteDown.setText("Vote Down");
                     IsVoteDown = true;
                 }
@@ -216,6 +247,10 @@ public class ProfileActivity extends AppCompatActivity {
         name.setText(receiver_name);
         email.setText(user.getEmail());
         description.setText(user.getDescription());
+        image = user.getImage().toString();
+        if(!user.getImage().equals("default")){
+            Picasso.with(ProfileActivity.this).load(image).into(mCircleImageView);
+        }
     }
 
 }

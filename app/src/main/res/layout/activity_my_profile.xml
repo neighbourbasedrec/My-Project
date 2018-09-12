@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/displayimage"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_marginTop="30dp"
+        android:src="@drawable/default_user_img" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,6 +77,13 @@
             android:textSize="30dp"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonChangeImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Image"
+        android:layout_marginLeft="130dp"/>
 
 
 

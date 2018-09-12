@@ -111,22 +111,33 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //------IF USER IS SUCCESSFULLY REGISTERED-----
                 if(task.isSuccessful()){
+                    final Map userMap=new HashMap();
                     mUser = mAuth.getCurrentUser();
-                    String Uid = mUser.getUid();
-                    String Uname = displayname;
+                    final String Uid = mUser.getUid();
+                    final String Uname = displayname;
                     String Uemail = mUser.getEmail();
                     String token_id= FirebaseInstanceId.getInstance().getToken();
-                    User newUser = User.newUser(Uid, Uname, Uemail, token_id, selfDescription);
-                    try {
-                        SharedPreference.saveUserName(RegisterActivity.this, Uname);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    //DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference().child("user");
-                    mDatabase.child(Uid).setValue(newUser);
-                    startMainActivity();
-                }
+                    userMap.put("device_token",token_id);
+                    userMap.put("name",displayname);
+                    userMap.put("email", Uemail);
+                    userMap.put("uid", Uid);
+                    userMap.put("description","normal person");
+                    userMap.put("image","default");
+                    userMap.put("thumb_image","default");
+                    mDatabase.child(Uid).updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
 
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            startMainActivity();
+                            try {
+                                SharedPreference.saveUserName(RegisterActivity.this, Uname);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        //DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference().child("user");
+                    });
+                }
                 //---ERROR IN ACCOUNT CREATING OF NEW USER---
                 else{
                     Toast.makeText(getApplicationContext(), "ERROR REGISTERING USER....", Toast.LENGTH_SHORT).show();

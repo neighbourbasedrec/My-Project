@@ -31,6 +31,7 @@
         <activity android:name="com.example.apple.votingmachine.VotingRoomEditorActivity"/>
         <activity android:name="com.example.apple.votingmachine.MyVotingRoomActivity"/>
         <activity android:name="com.example.apple.votingmachine.MyProfileActivity"/>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
 
     </application>
 

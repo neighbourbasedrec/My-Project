@@ -6,6 +6,7 @@ public class User {
     private String email;
     private String device_token;
     private String image;
+    private String thumb_image;
     private String description;
 
     public User(String uid, String name, String email, String token, String description){
@@ -14,6 +15,7 @@ public class User {
         this.email = email;
         this.device_token = token;
         this.image = "default";
+        this.thumb_image = "default";
         this.description = description;
     }
 
@@ -46,5 +48,7 @@ public class User {
     public String getImage(){
         return image;
     }
+
+    public String getThumb_image() { return thumb_image; }
 
 }

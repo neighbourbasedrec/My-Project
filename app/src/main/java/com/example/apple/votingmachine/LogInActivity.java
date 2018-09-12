@@ -111,7 +111,7 @@ public class LogInActivity extends AppCompatActivity{
                             String user_id=mUser.getUid();
                             String token_id= FirebaseInstanceId.getInstance().getToken();
                             Map addValue = new HashMap();
-                            addValue.put("device_token",token_id);
+                            addValue.put("token",token_id);
 
                             //---IF UPDATE IS SUCCESSFULL , THEN OPEN MAIN ACTIVITY---
                             mUserReference.child(user_id).updateChildren(addValue, new DatabaseReference.CompletionListener(){
@@ -180,15 +180,31 @@ public class LogInActivity extends AppCompatActivity{
                         if (task.isSuccessful()) {
                             mUser = mAuth.getCurrentUser();
                             String Uid = mUser.getUid();
-                            String Uname = mUser.getDisplayName();
+                            final String Uname = mUser.getDisplayName();
                             String Uemail = mUser.getEmail();
                             String token_id= FirebaseInstanceId.getInstance().getToken();
-                            User newUser = User.newUser(Uid, Uname, Uemail, token_id, "normal person");
-                            mUserReference.child(Uid).setValue(newUser);
-                            startMainActivity();
+                            //User newUser = User.newUser(Uid, Uname, Uemail, token_id, "normal person");
+                            //mUserReference.child(Uid).setValue(newUser);
+                            //startMainActivity();
+                            final Map userMap=new HashMap();
+                            userMap.put("token",token_id);
+                            userMap.put("name",Uname);
+                            userMap.put("email", Uemail);
+                            userMap.put("uid", Uid);
+                            mUserReference.child(Uid).updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    startMainActivity();
+                                    try {
+                                        SharedPreference.saveUserName(LogInActivity.this, Uname);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                //DatabaseReference mUserReference = FirebaseDatabase.getInstance().getReference().child("user");
+                            });
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(LogInActivity.this, "signInWithCredential:success", Toast.LENGTH_LONG);
-
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

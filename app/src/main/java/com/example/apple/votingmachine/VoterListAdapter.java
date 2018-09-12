@@ -18,10 +18,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class VoterListAdapter extends RecyclerView.Adapter<VoterListAdapter.VoterViewHolder>{
@@ -49,6 +52,7 @@ public class VoterListAdapter extends RecyclerView.Adapter<VoterListAdapter.Vote
     //----RETURNING VIEW OF SINGLE HOLDER----
     public class VoterViewHolder extends RecyclerView.ViewHolder {
 
+        public CircleImageView circleImageView;
         public TextView userName;
         public TextView userDescription;
         public String userId;
@@ -56,7 +60,7 @@ public class VoterListAdapter extends RecyclerView.Adapter<VoterListAdapter.Vote
 
         public VoterViewHolder(View itemView) {
             super(itemView);
-
+            circleImageView = (CircleImageView) itemView.findViewById(R.id.circleImageViewUserImage);
             userName = (TextView) itemView.findViewById(R.id.username);
             userDescription = (TextView)itemView.findViewById(R.id.selfDescription);
 
@@ -85,6 +89,7 @@ public class VoterListAdapter extends RecyclerView.Adapter<VoterListAdapter.Vote
         User voter = mVotersList.get(position);
         String voterName = voter.getName();
         String voterDescription = voter.getDescription();
+        Picasso.with(context).load(voter.getThumb_image()).placeholder(R.drawable.default_user_img).into(holder.circleImageView);
 
         //----CHANGING TIMESTAMP TO TIME-----
         holder.userName.setText(voterName);

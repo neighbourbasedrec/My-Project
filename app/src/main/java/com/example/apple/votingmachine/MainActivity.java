@@ -115,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.my_room:
                 MyVotingRoom();;
                 return true;
+            case R.id.my_profile:
+                MyProfile();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -146,6 +149,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void MyVotingRoom(){
         Intent searchRoom = new Intent(MainActivity.this, MyVotingRoomActivity.class);
+        startActivity(searchRoom);
+    }
+
+    public void MyProfile(){
+        Intent searchRoom = new Intent(MainActivity.this, MyProfileActivity.class);
         startActivity(searchRoom);
     }
 

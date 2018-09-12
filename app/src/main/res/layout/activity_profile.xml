@@ -5,33 +5,86 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:layout_marginTop="40dp" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/displayimage"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
 
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="30dp"
+        android:src="@drawable/default_user_img" />
 
-    <TextView
-        android:id="@+id/self"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: "
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/self"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"/>
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/invite"
-        android:layout_marginLeft="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Invite"/>
+        android:layout_marginLeft="150dp"
+        android:text="Invite" />
 
     <LinearLayout
         android:layout_width="match_parent"

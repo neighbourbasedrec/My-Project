@@ -1,5 +1,6 @@
 package com.example.apple.votingmachine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,9 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddVoterActivity extends AppCompatActivity {
 
@@ -122,5 +126,9 @@ public class AddVoterActivity extends AppCompatActivity {
 
         }
 
+        public void setUserImage(String userThumbImage, Context ctx){
+            CircleImageView userImageview=(CircleImageView)mView.findViewById(R.id.circleImageViewUserImage);
+            Picasso.with(ctx).load(userThumbImage).placeholder(R.drawable.default_user_img).into(userImageview);
+        }
     }
 }
