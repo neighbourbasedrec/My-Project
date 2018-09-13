@@ -78,7 +78,7 @@ public class SearchVotingRoomActivity extends AppCompatActivity {
                 });
                 FirebaseRecyclerAdapter<VotingRoom, SearchVotingRoomActivity.AddVotingViewHolder> UserRecycleAdapter=new FirebaseRecyclerAdapter<VotingRoom, SearchVotingRoomActivity.AddVotingViewHolder>(
                         VotingRoom.class,
-                        R.layout.recycle_list_single_user,
+                        R.layout.recycle_list_single_voting,
                         SearchVotingRoomActivity.AddVotingViewHolder.class,
                         searchedRoom
                 ) {
@@ -123,14 +123,14 @@ public class SearchVotingRoomActivity extends AppCompatActivity {
 
         public void setName(String name){
 
-            TextView userName = (TextView) mView.findViewById(R.id.selfDescription);
+            TextView userName = (TextView) mView.findViewById(R.id.roomname);
             userName.setText(name);
 
         }
 
         public void setRoomID(String roomID){
 
-            TextView RoomID = (TextView) mView.findViewById(R.id.username);
+            TextView RoomID = (TextView) mView.findViewById(R.id.roomid);
             RoomID.setText(roomID);
 
         }

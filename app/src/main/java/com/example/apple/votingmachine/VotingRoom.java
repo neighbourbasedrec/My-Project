@@ -4,24 +4,29 @@ public class VotingRoom {
 
     private String hashCode;
     private String roomName;
+    private String startDate;
 
     //due date
     private String dueDate;
 
     //ticket per number
-    private String voteTicket;
+    private String description;
 
-    public VotingRoom(String hashCode, String roomName, String dueDate, String voteTicket){
+    public VotingRoom(String hashCode, String roomName, String dueDate, String description, String startDate){
         this.hashCode = hashCode;
         this.roomName = roomName;
         this.dueDate = dueDate;
-        this.voteTicket = voteTicket;
+        this.description = description;
+        this.startDate = startDate;
     }
 
     public VotingRoom(){
 
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
     public String getHashCode(){
         return hashCode;
     }
@@ -34,11 +39,11 @@ public class VotingRoom {
         return dueDate;
     }
 
-    public String getVoteTicket() {
-        return voteTicket;
+    public String getDescription() {
+        return description;
     }
 
-    static VotingRoom newVotingRoom(String hashCode, String roomName, String dueDate, String voteTicket){
-        return new VotingRoom(hashCode, roomName, dueDate, voteTicket);
+    static VotingRoom newVotingRoom(String hashCode, String roomName, String dueDate, String voteTicket, String startDate){
+        return new VotingRoom(hashCode, roomName, dueDate, voteTicket, startDate);
     }
 }

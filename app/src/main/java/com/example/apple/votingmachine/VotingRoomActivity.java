@@ -3,6 +3,7 @@ package com.example.apple.votingmachine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,8 +28,13 @@ public class VotingRoomActivity extends AppCompatActivity {
 
     private TextView mHashCode;
     private TextView mRoomName;
+    private TextView mRoomDescription;
+    private TextView mStartDate;
     private TextView mDueDate;
     private Button mInviteUser;
+    //button for testing result
+    private FloatingActionButton resultButton;
+
     private DatabaseReference mVoRoomRef;
     private DatabaseReference mVoter;
     private DatabaseReference mRoom;
@@ -40,7 +46,7 @@ public class VotingRoomActivity extends AppCompatActivity {
     private ArrayList<User> voters = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private Boolean joinApplication = false;
-    private String voteTicket;
+    //private String voteTicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +54,11 @@ public class VotingRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vote_room);
         mHashCode = (TextView) findViewById(R.id.hashCode);
         mRoomName = (TextView) findViewById(R.id.room_name);
+        mRoomDescription = (TextView)findViewById(R.id.room_description);
+        mStartDate = (TextView)findViewById(R.id.start_date);
         mDueDate = (TextView) findViewById(R.id.due_date);
         mInviteUser = (Button) findViewById(R.id.invite);
+        resultButton = (FloatingActionButton) findViewById(R.id.result);
         mAuth = FirebaseAuth.getInstance();
         mVoRoomRef = FirebaseDatabase.getInstance().getReference().child("votingRoom");
         mRoom = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid()).child("VotingRoom");
@@ -71,8 +80,10 @@ public class VotingRoomActivity extends AppCompatActivity {
                 VotingRoom votingRoom = dataSnapshot.getValue(VotingRoom.class);
                 mHashCode.setText(votingRoom.getHashCode());
                 mRoomName.setText(votingRoom.getRoomName());
+                mRoomDescription.setText(votingRoom.getDescription());
+                mStartDate.setText("Start Date: " + votingRoom.getStartDate());
                 mDueDate.setText("Due Date: " + votingRoom.getDueDate());
-                voteTicket = votingRoom.getVoteTicket();
+                //voteTicket = votingRoom.getVoteTicket();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
@@ -109,6 +120,15 @@ public class VotingRoomActivity extends AppCompatActivity {
                     }
                 }
             });
+
+        resultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent testVoteResult = new Intent(VotingRoomActivity.this, VoteResultAcyivity.class);
+                testVoteResult.putExtra("room_id",room_id);
+                startActivity(testVoteResult);
+            }
+        });
     }
 
     @Override

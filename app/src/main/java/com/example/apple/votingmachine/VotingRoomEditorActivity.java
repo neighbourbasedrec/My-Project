@@ -4,6 +4,8 @@ package com.example.apple.votingmachine;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -32,12 +34,12 @@ public class VotingRoomEditorActivity extends AppCompatActivity implements DateP
 
     private TextView mHashCode;
     private TextView mDueDate;
-    private EditText mRoomName;
+    private TextInputLayout mRoomName;
+    private TextInputLayout mRoomDescription;
     //private Button mInviteUser;
-    private Button mSave;
-    private Button mCancel;
-    private Button mDDButton;
-    private NiceSpinner mVoteTickets;
+    private TextView mSave;
+    private TextView mCancel;
+    private FloatingActionButton mDDButton;
     private DatabaseReference mVoRoomRef;
     private DatabaseReference mVoter;
     private DatabaseReference mRoom;
@@ -54,6 +56,7 @@ public class VotingRoomEditorActivity extends AppCompatActivity implements DateP
     private String Year;
     private String dueDate;
     private String voteTicket;
+    private String dateOfToday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +64,22 @@ public class VotingRoomEditorActivity extends AppCompatActivity implements DateP
         setContentView(R.layout.activity_vote_room_edit);
         mHashCode = (TextView) findViewById(R.id.hashCode);
         mDueDate = (TextView) findViewById(R.id.date);
-        mDDButton = (Button) findViewById(R.id.due_date);
-        mRoomName = (EditText) findViewById(R.id.room_name);
+        mDDButton = (FloatingActionButton) findViewById(R.id.due_date);
+        mRoomName = (TextInputLayout) findViewById(R.id.room_name);
+        mRoomDescription = (TextInputLayout) findViewById(R.id.room_description);
         //mInviteUser = (Button) findViewById(R.id.invite);
         //mInviteUser.setEnabled(false);
-        mVoteTickets = (NiceSpinner) findViewById(R.id.nice_spinner);
-        mSave = (Button) findViewById(R.id.save);
-        mCancel = (Button) findViewById(R.id.cancel);
+        //mVoteTickets = (NiceSpinner) findViewById(R.id.nice_spinner);
+        mSave = (TextView) findViewById(R.id.save);
+        mCancel = (TextView) findViewById(R.id.cancel);
         mAuth = FirebaseAuth.getInstance();
         mVoRoomRef = FirebaseDatabase.getInstance().getReference().child("votingRoom");
         mRoom = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid()).child("VotingRoom");
-        final List<String> voteChioices = new LinkedList<>(Arrays.asList("3", "4", "5"));
-        mVoteTickets.attachDataSource(voteChioices);
-        mVoteTickets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Calendar date = Calendar.getInstance();
+        dateOfToday = "" + date.get(Calendar.DAY_OF_MONTH) +"/"+ date.get(Calendar.MONTH) + "/"+ date.get(Calendar.YEAR);
+        //final List<String> voteChioices = new LinkedList<>(Arrays.asList("3", "4", "5"));
+        //mVoteTickets.attachDataSource(voteChioices);
+        /*mVoteTickets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 voteTicket = voteChioices.get(i);
@@ -82,7 +88,7 @@ public class VotingRoomEditorActivity extends AppCompatActivity implements DateP
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
+        });*/
         /*room_id = getIntent().getStringExtra("room_id");
         if(room_id != null) {
             //edit the room info
@@ -109,12 +115,16 @@ public class VotingRoomEditorActivity extends AppCompatActivity implements DateP
             @Override
             public void onClick(View view) {
                 String hashCode = mHashCode.getText().toString();
-                String roomName = mRoomName.getText().toString();
-                VotingRoom votingRoom = VotingRoom.newVotingRoom(hashCode, roomName, dueDate, voteTicket);
+                String roomName = mRoomName.getEditText().getText().toString();
+                String roomDescription = mRoomDescription.getEditText().getText().toString();
+                VotingRoom votingRoom = VotingRoom.newVotingRoom(hashCode, roomName, dueDate, roomDescription, dateOfToday);
                 if(roomName.length()>0) {
+                    //initiate a new voting room
                     mVoRoomRef.child(hashCode).setValue(votingRoom);
+                    //add myself to the voter list of this room
                     mVoRoomRef.child(hashCode).child("Voter").child(mAuth.getCurrentUser().getUid()).setValue(true);
-                    mVoRoomRef.child(hashCode).child("Voter").child(mAuth.getCurrentUser().getUid()).child("voteTimes").setValue(voteTicket);
+                    //mVoRoomRef.child(hashCode).child("Voter").child(mAuth.getCurrentUser().getUid()).child("voteTimes").setValue(voteTicket);
+                    //add this room to my room list
                     mRoom.child(hashCode).setValue(true);
                     //mSave.setEnabled(false);
                     Intent VotingRoom = new Intent(VotingRoomEditorActivity.this, VotingRoomActivity.class);
